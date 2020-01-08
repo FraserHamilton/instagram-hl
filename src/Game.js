@@ -1,18 +1,23 @@
 import React, { useState } from "react";
 import "./App.css";
-import instaData from "./instaDataFinal.json";
+import instaData from "./Data/instaDataFinal.json";
 import InstaDisplay from "./InstaDisplay.js";
+import GameOver from "./GameOver";
+import StartScreen from "./StartScreen";
+import styled from "styled-components";
 
-const Game = () => {
+const Game = ({ className }) => {
   const convertToRoundedMillions = number => {
-    return (number * 0.000001).toFixed(2);
+    let rounded = (number * 0.000001).toFixed(2);
+    return rounded;
   };
 
   const instagramData = instaData.slice(0, 249);
 
   const getNewInsta = () => {
-    const newInsta =
-      instagramData[Math.floor(Math.random() * instagramData.length)];
+    const newInsta = {
+      ...instagramData[Math.floor(Math.random() * instagramData.length)]
+    };
     newInsta.followers = convertToRoundedMillions(newInsta.followers);
     return newInsta;
   };
@@ -21,7 +26,7 @@ const Game = () => {
 
   const [hiddenInsta, setHiddenInsta] = useState(getNewInsta());
 
-  const [gameInProgress, setGameInProgress] = useState(true);
+  const [gameStage, setGameStage] = useState(1);
 
   const [score, setScore] = useState(0);
 
@@ -44,15 +49,14 @@ const Game = () => {
     setGivenInsta(getNewInsta());
     setHiddenInsta(getNewInsta());
     setScore(0);
-    setGameInProgress(true);
+    setGameStage(2);
   };
 
   const gameOver = () => {
-    setGameInProgress(false);
+    setGameStage(3);
   };
 
-  const guessClick = e => {
-    const guess = e.target.name;
+  const guessClick = guess => {
     const highOrLow = calculateAnswer();
 
     const isCorrect = highOrLow === guess;
@@ -65,29 +69,38 @@ const Game = () => {
     }
   };
 
-  if (gameInProgress) {
+  if (gameStage === 1) {
+    return <StartScreen startFunc={startNewGame}></StartScreen>;
+  } else if (gameStage === 2) {
     return (
-      <div>
-        <h2>{score}</h2>
+      <div className={className}>
+        <h1>Score: {score}</h1>
         <InstaDisplay insta={givenInsta}></InstaDisplay>
-        <InstaDisplay insta={hiddenInsta}></InstaDisplay>
-        <button onClick={guessClick} name="higher">
-          Higher
-        </button>
-        <button onClick={guessClick} name="lower">
-          Lower
-        </button>
+        <div id="versus">
+          <h1>VS</h1>
+        </div>
+        <InstaDisplay
+          clickFunction={guessClick}
+          hidden
+          insta={hiddenInsta}
+          secondInsta={givenInsta.name}
+        ></InstaDisplay>
       </div>
     );
   } else {
-    return (
-      <div>
-        <h1>Game Over</h1>
-        <h3>Your Score Was: {score}</h3>
-        <button onClick={startNewGame}>Play Again?</button>
-      </div>
-    );
+    return <GameOver score={score} restartFunc={startNewGame}></GameOver>;
   }
 };
 
-export default Game;
+const StyledGame = styled(Game)`
+  #versus {
+    display: inline-block;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: #fff989;
+  }
+`;
+
+export default StyledGame;
