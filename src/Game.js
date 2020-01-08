@@ -1,10 +1,11 @@
 import React, { useState } from "react";
 import "./App.css";
 import instaData from "./Data/instaDataFinal.json";
-import InstaDisplay from "./InstaDisplay.js";
 import GameOver from "./GameOver";
 import StartScreen from "./StartScreen";
 import styled from "styled-components";
+import CountUp from "react-countup";
+import ButtonGroup from "./ButtonGroup";
 
 const Game = ({ className }) => {
   const convertToRoundedMillions = number => {
@@ -43,6 +44,7 @@ const Game = ({ className }) => {
   const startNewRound = () => {
     setGivenInsta(hiddenInsta);
     setHiddenInsta(getNewInsta());
+    setGameStage(2);
   };
 
   const startNewGame = () => {
@@ -53,38 +55,62 @@ const Game = ({ className }) => {
   };
 
   const gameOver = () => {
-    setGameStage(3);
+    setGameStage(4);
   };
 
-  const guessClick = guess => {
+  const guessClick = e => {
+    const guess = e.target.name;
+
     const highOrLow = calculateAnswer();
 
     const isCorrect = highOrLow === guess;
 
-    if (isCorrect) {
-      setScore(score + 1);
-      startNewRound();
-    } else {
-      gameOver();
-    }
+    setGameStage(3);
+
+    setTimeout(() => {
+      if (isCorrect) {
+        setScore(score + 1);
+        startNewRound();
+      } else {
+        gameOver();
+      }
+    }, 3000);
   };
 
   if (gameStage === 1) {
     return <StartScreen startFunc={startNewGame}></StartScreen>;
-  } else if (gameStage === 2) {
+  } else if (gameStage === 2 || gameStage === 3) {
     return (
       <div className={className}>
         <h1>Score: {score}</h1>
-        <InstaDisplay insta={givenInsta}></InstaDisplay>
+        <div className={"instaDisplay"}>
+          <img height="200px" src={givenInsta.picture}></img>
+          <h2>{givenInsta.name}</h2>
+          <p>Has</p>
+          <h1>{givenInsta.followers}M</h1>
+          <p>Followers</p>
+        </div>
         <div id="versus">
           <h1>VS</h1>
         </div>
-        <InstaDisplay
-          clickFunction={guessClick}
-          hidden
-          insta={hiddenInsta}
-          secondInsta={givenInsta.name}
-        ></InstaDisplay>
+        <div className={"instaDisplay"}>
+          <img height="200px" src={hiddenInsta.picture}></img>
+          <h2>{hiddenInsta.name}</h2>
+          <p>Has</p>
+          {gameStage === 3 ? (
+            <React.Fragment>
+              <h1>
+                <CountUp end={hiddenInsta.followers} />M
+              </h1>
+              <p>Followers Than {givenInsta.name}</p>
+            </React.Fragment>
+          ) : (
+            <React.Fragment>
+              <ButtonGroup clickFunction={guessClick}></ButtonGroup>
+              <p>Followers Than {givenInsta.name}</p>
+            </React.Fragment>
+          )}
+        </div>
       </div>
     );
   } else {
@@ -100,6 +126,19 @@ const StyledGame = styled(Game)`
     left: 50%;
     transform: translate(-50%, -50%);
     color: #fff989;
+  }
+  .instaDisplay {
+    display: inline-block;
+    width: 500px;
+    min-height: 500px;
+    h1 {
+      color: #fff989;
+      min-height: 110px;
+      line-height: 110px;
+      white-space: nowrap;
+      font-size: 3em;
+      margin: 0;
+    }
   }
 `;
 
