@@ -10,9 +10,9 @@ const StartScreen = ({ startFunc, className }) => {
         <h1>Higher Or Lower</h1>
         <h2>Instagram Edition</h2>
         <h3>
-          A frustratingly addictive game of higher or lower using top Instagram
-          follower counts. <br></br> The data is pulled daily to keep the counts
-          as current as possible. <br></br>
+          A frustratingly addictive game of higher or lower using the top
+          Instagram follower counts. <br></br> The data is pulled daily to keep
+          the counts as current as possible. <br></br>
         </h3>
 
         <Button text={"Play"} onClick={startFunc}></Button>

@@ -3,9 +3,9 @@ import "./App.css";
 import instaData from "./Data/instaDataFinal.json";
 import GameOver from "./GameOver";
 import StartScreen from "./StartScreen";
-import styled from "styled-components";
 import CountUp from "react-countup";
 import ButtonGroup from "./ButtonGroup";
+import styled from "styled-components";
 
 const Game = ({ className }) => {
   const convertToRoundedMillions = number => {
@@ -84,7 +84,11 @@ const Game = ({ className }) => {
       <div className={className}>
         <h1>Score: {score}</h1>
         <div className={"instaDisplay"}>
-          <img height="200px" src={givenInsta.picture}></img>
+          <img
+            alt={givenInsta.name}
+            height="200px"
+            src={givenInsta.picture}
+          ></img>
           <h2>{givenInsta.name}</h2>
           <p>Has</p>
           <h1>{givenInsta.followers}M</h1>
@@ -94,7 +98,11 @@ const Game = ({ className }) => {
           <h1>VS</h1>
         </div>
         <div className={"instaDisplay"}>
-          <img height="200px" src={hiddenInsta.picture}></img>
+          <img
+            alt={hiddenInsta.name}
+            height="200px"
+            src={hiddenInsta.picture}
+          ></img>
           <h2>{hiddenInsta.name}</h2>
           <p>Has</p>
           {gameStage === 3 ? (
