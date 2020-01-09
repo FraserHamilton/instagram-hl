@@ -1,5 +1,4 @@
 import React from "react";
-import "./App.css";
 import styled from "styled-components";
 
 const Button = ({ onClick, text, name, className }) => {
