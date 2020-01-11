@@ -107,7 +107,8 @@ const Game = ({ className }) => {
           {gameStage === 3 ? (
             <React.Fragment>
               <h1>
-                <CountUp end={hiddenInsta.followers} />M
+                <CountUp decimals={2} end={parseFloat(hiddenInsta.followers)} />
+                M
               </h1>
               <p>Followers Than {givenInsta.name}</p>
             </React.Fragment>
