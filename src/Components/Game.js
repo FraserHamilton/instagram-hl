@@ -81,8 +81,11 @@ const Game = ({ className }) => {
   } else if (gameStage === 2 || gameStage === 3) {
     return (
       <div className={className}>
-        <h1>Score: {score}</h1>
-        <div className={"instaDisplay"}>
+        <h1 className={"score"}>Score: {score}</h1>
+        <div
+          Style={`background-image: linear-gradient( rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5) ), url('${givenInsta.picture}');`}
+          className={"instaDisplay"}
+        >
           <img
             alt={givenInsta.name}
             height="200px"
@@ -96,7 +99,10 @@ const Game = ({ className }) => {
         <div id="versus">
           <h1>VS</h1>
         </div>
-        <div className={"instaDisplay"}>
+        <div
+          Style={`background-image: linear-gradient( rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5) ), url('${hiddenInsta.picture}');`}
+          className={"instaDisplay"}
+        >
           <img
             alt={hiddenInsta.name}
             height="200px"
@@ -128,17 +134,13 @@ const Game = ({ className }) => {
 
 const StyledGame = styled(Game)`
   #versus {
-    display: inline-block;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
     color: #fff989;
   }
   .instaDisplay {
-    display: inline-block;
-    width: 500px;
-    min-height: 500px;
+    background-repeat: no-repeat;
+    background-position: top;
+    background-size: 200px;
+    min-height: 225px;
     h1 {
       color: #fff989;
       min-height: 110px;
@@ -146,6 +148,32 @@ const StyledGame = styled(Game)`
       white-space: nowrap;
       font-size: 3em;
       margin: 0;
+    }
+  }
+  img {
+    display: none;
+  }
+  .score {
+    margin-top: 10%;
+  }
+
+  @media (min-width: 420px) {
+    #versus {
+      display: inline-block;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      color: #fff989;
+    }
+    .instaDisplay {
+      background-image: none !important;
+      display: inline-block;
+      width: 500px;
+      min-height: 500px;
+    }
+    img {
+      display: inline;
     }
   }
 `;
