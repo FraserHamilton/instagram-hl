@@ -133,6 +133,8 @@ const Game = ({ className }) => {
 };
 
 const StyledGame = styled(Game)`
+  margin-bottom: 80px;
+
   #versus {
     color: #fff989;
   }
@@ -140,11 +142,9 @@ const StyledGame = styled(Game)`
     background-repeat: no-repeat;
     background-position: top;
     background-size: 200px;
-    min-height: 225px;
+    min-height: 200px;
     h1 {
       color: #fff989;
-      min-height: 110px;
-      line-height: 110px;
       white-space: nowrap;
       font-size: 3em;
       margin: 0;
@@ -158,6 +158,7 @@ const StyledGame = styled(Game)`
   }
 
   @media (min-width: 420px) {
+    margin-bottom: 0px;
     #versus {
       display: inline-block;
       position: absolute;
@@ -171,6 +172,10 @@ const StyledGame = styled(Game)`
       display: inline-block;
       width: 500px;
       min-height: 500px;
+      h1 {
+        min-height: 110px;
+        line-height: 110px;
+      }
     }
     img {
       display: inline;
