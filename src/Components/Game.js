@@ -31,12 +31,23 @@ const Game = ({ className }) => {
   const [score, setScore] = useState(0);
 
   const calculateAnswer = () => {
-    if (hiddenInsta.followers === givenInsta.followers) {
-      return "same";
-    } else if (hiddenInsta.followers > givenInsta.followers) {
+    console.log(givenInsta.name + ":" + givenInsta.followers);
+
+    console.log(hiddenInsta.name + ":" + hiddenInsta.followers);
+
+    if (hiddenInsta.followers > parseFloat(givenInsta.followers)) {
+      console.log("higher");
+      console.log(givenInsta.name + ":" + givenInsta.followers);
+      console.log(hiddenInsta.name + ":" + hiddenInsta.followers);
       return "higher";
-    } else {
+    } else if (hiddenInsta.followers < parseFloat(givenInsta.followers)) {
+      console.log("lower");
+      console.log(givenInsta.name + ":" + givenInsta.followers);
+
+      console.log(hiddenInsta.name + ":" + hiddenInsta.followers);
       return "lower";
+    } else {
+      return "same";
     }
   };
 
@@ -71,6 +82,12 @@ const Game = ({ className }) => {
         setScore(score + 1);
         startNewRound();
       } else {
+        // console.log("guess:" + guess);
+
+        // console.log("highOrLow:" + highOrLow);
+
+        // console.log("isCorrect:" + isCorrect);
+
         gameOver();
       }
     }, 3000);
