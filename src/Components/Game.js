@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import instaData from "../Data/instaDataFinal.json";
+import instaData from "../Data/instaData.json";
 import GameOver from "./GameOver";
 import StartScreen from "./StartScreen";
 import CountUp from "react-countup";
